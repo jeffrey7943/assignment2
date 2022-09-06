@@ -1,0 +1,17 @@
+{
+  "name": "assignment2",
+  "version": "1.0.0",
+  "description": "ASSIGNMENT 2",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/index.js"
+  },
+  "author": "JEFFREY ANTHONY MUKAKTH",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^6.5.4"
+  }
+}
