@@ -35,6 +35,13 @@ const Data = () => {
             <th>{alldata.email}</th>
             <th>{alldata.hobbies}</th>
             <th>
+              <Button
+                variant="success"
+                href={`/update/${alldata._id}`}
+                className="me-3"
+              >
+                UPDATE
+              </Button>
               <Button variant="danger" onClick={(e) => deleteData(alldata._id)}>
                 DELETE
               </Button>

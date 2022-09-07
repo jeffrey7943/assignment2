@@ -6,6 +6,17 @@ const getData = asyncHandler(async (req, res) => {
   res.json(data);
 });
 
+const getSingleData = asyncHandler(async (req, res) => {
+  const data = await Data.findById(req.params.id);
+
+  if (data) {
+    res.json(data);
+  } else {
+    res.status(404);
+    res.json({ message: "DATA NOT FOUND" });
+  }
+});
+
 const addData = asyncHandler(async (req, res) => {
   const { name, phonenumber, email, hobbies } = req.body;
 
@@ -54,6 +65,7 @@ const deleteData = asyncHandler(async (req, res) => {
 
 module.exports = {
   getData,
+  getSingleData,
   addData,
   updateData,
   deleteData,
