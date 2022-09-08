@@ -56,10 +56,10 @@ const deleteData = asyncHandler(async (req, res) => {
 
   if (data) {
     await data.remove();
-    res.json({ message: "PRODUCT DELETED" });
+    res.json({ message: "DATA DELETED" });
   } else {
     res.status(404);
-    throw new Error("PRODUCT NOT FOUND");
+    throw new Error("DATA NOT FOUND");
   }
 });
 
