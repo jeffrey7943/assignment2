@@ -28,12 +28,14 @@ const Data = () => {
       return (
         <tbody key={alldata._id}>
           <tr>
-            <th>CHECKBOX</th>
-            <th>{alldata._id}</th>
-            <th>{alldata.name}</th>
-            <th>{alldata.phonenumber}</th>
-            <th>{alldata.email}</th>
-            <th>{alldata.hobbies}</th>
+            <th>
+              <input type="checkbox" />
+            </th>
+            <th className="select">{alldata._id}</th>
+            <th className="select">{alldata.name}</th>
+            <th className="select">{alldata.phonenumber}</th>
+            <th className="select">{alldata.email}</th>
+            <th className="select">{alldata.hobbies}</th>
             <th>
               <Button
                 variant="success"

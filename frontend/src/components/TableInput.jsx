@@ -1,12 +1,76 @@
-import React from "react";
-import { Container, Row, Table } from "react-bootstrap";
+import axios from "axios";
+import React, { useState } from "react";
+import {
+  Button,
+  Container,
+  FloatingLabel,
+  Form,
+  Row,
+  Table,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import Popup from "reactjs-popup";
 import Data from "./Data";
 
 const TableInput = () => {
+  const getInfo = () => {
+    var grid = document.getElementById("table1");
+    var checkboxes = grid.getElementsByTagName("input");
+    var message = "";
+
+    for (var i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked) {
+        var row = checkboxes[i].parentNode.parentNode;
+        message += "ID: " + row.cells[1].innerHTML + "\n";
+        message += "NAME: " + row.cells[2].innerHTML + "\n";
+        message += "PHONE NUMBER: " + row.cells[3].innerHTML + "\n";
+        message += "EMAIL: " + row.cells[4].innerHTML + "\n";
+        message += "HOBBIES: " + row.cells[5].innerHTML + "\n";
+        message += "\n";
+      }
+    }
+    console.log(message);
+
+    var link =
+      "mailto:info@redpositive.in" +
+      "?cc=jeffreymukkath65@outlook.com" +
+      "&subject=" +
+      encodeURIComponent("DATA") +
+      "&body=" +
+      encodeURIComponent(message);
+
+    window.location.href = link;
+  };
+
+  const [name, setName] = useState("");
+  const [phonenumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [hobbies, setHobbies] = useState("");
+
+  const navigate = useNavigate();
+
+  const registerData = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await axios.post("/api/data/add", {
+        name,
+        phonenumber,
+        email,
+        hobbies,
+      });
+
+      console.log(data);
+      navigate(0);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
+
   return (
     <Container>
       <Row>
-        <Table striped bordered hover variant="light">
+        <Table striped bordered hover variant="light" id="table1">
           <thead>
             <tr>
               <th>SELECT ROW</th>
@@ -20,6 +84,59 @@ const TableInput = () => {
           </thead>
           <Data />
         </Table>
+        <div className="d-flex flex column ps-0">
+          <Button variant="success" onClick={getInfo} className="me-3">
+            SEND INFO
+          </Button>
+          <Popup
+            trigger={<Button variant="primary">ADD NEW DATA</Button>}
+            modal
+            nested
+          >
+            <Form onSubmit={registerData}>
+              <h1>FORM!</h1>
+              <FloatingLabel controlId="name" label="NAME" className="mb-3">
+                <Form.Control
+                  type="text"
+                  placeholder="JOHN"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </FloatingLabel>
+              <FloatingLabel
+                controlId="phonenumber"
+                label="PHONE NUMBER"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="number"
+                  placeholder="7506409929"
+                  value={phonenumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+              </FloatingLabel>
+              <FloatingLabel controlId="email" label="EMAIL" className="mb-3">
+                <Form.Control
+                  type="email"
+                  placeholder="example@mail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </FloatingLabel>
+              <Form.Label className="mb-3 ms-2">HOBBIES</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                className="mb-3"
+                value={hobbies}
+                onChange={(e) => setHobbies(e.target.value)}
+              />
+              <Button variant="primary" type="submit" className="mb-3">
+                ENTER DATA
+              </Button>
+            </Form>
+          </Popup>
+        </div>
       </Row>
     </Container>
   );
