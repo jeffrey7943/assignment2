@@ -33,6 +33,15 @@ const FormInput = () => {
           placeholder="JOHN"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
+          autoFocus
+          pattern="[A-Za-z\s]{3,30}"
+          onInvalid={(e) =>
+            e.target.setCustomValidity(
+              "use only A-Z & a-z characters and max 30 characters"
+            )
+          }
+          onInput={(e) => e.target.setCustomValidity("")}
         />
       </FloatingLabel>
       <FloatingLabel
@@ -41,10 +50,18 @@ const FormInput = () => {
         className="mb-3"
       >
         <Form.Control
-          type="number"
+          type="tel"
           placeholder="7506409929"
           value={phonenumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
+          required
+          pattern="[0-9]{10}"
+          onInvalid={(e) =>
+            e.target.setCustomValidity(
+              "please enter numbers only and max 10 numbers"
+            )
+          }
+          onInput={(e) => e.target.setCustomValidity("")}
         />
       </FloatingLabel>
       <FloatingLabel controlId="email" label="EMAIL" className="mb-3">
@@ -53,6 +70,11 @@ const FormInput = () => {
           placeholder="example@mail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
+          onInvalid={(e) =>
+            e.target.setCustomValidity("please enter a proper email")
+          }
+          onInput={(e) => e.target.setCustomValidity("")}
         />
       </FloatingLabel>
       <Form.Label className="mb-3 ms-2">HOBBIES</Form.Label>
@@ -62,6 +84,9 @@ const FormInput = () => {
         className="mb-3"
         value={hobbies}
         onChange={(e) => setHobbies(e.target.value)}
+        required
+        onInvalid={(e) => e.target.setCustomValidity("please fill this field")}
+        onInput={(e) => e.target.setCustomValidity("")}
       />
       <Button variant="primary" type="submit" className="mb-3">
         ENTER DATA
